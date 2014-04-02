@@ -31,7 +31,6 @@ function validate(pkginfo, moduleIndex, result) {
             validate(pkginfo.dependencies[pkg], moduleIndex, result);
         });
     }
-
     return result;
 }
 

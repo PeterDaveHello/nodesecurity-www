@@ -6,7 +6,9 @@ var advisories = require('./hapi-advisories');
 var server = Hapi.createServer(config.hapi.host, config.hapi.port, config.hapi.options);
 
 server.pack.require('bucker', config.bucker, function (err) {
-    if (err) console.error('failed loading bucker plugin');
+    if (err) {
+        console.error('failed loading bucker plugin');
+    }
 });
 
 
@@ -42,13 +44,13 @@ server.route({
 });
 
 server.pack.register(advisories, {}, function (err) {
-    if (err) { 
+    if (err) {
         console.log('Failed to load plugin: ' + err);
     } else {
         console.log('Loaded advisories');
         // Start the server
         server.start(function () {
-            console.log('Started Server');
+            console.log('Started Server on PORT: ' + config.hapi.port);
         });
     }
 });

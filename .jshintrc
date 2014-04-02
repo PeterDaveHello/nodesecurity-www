@@ -3,7 +3,7 @@
     "expr": true,
     "loopfunc": true,
     "quotmark": true,
-    "curly": false,
+    "curly": true,
     "evil": true,
     "white": true,
     "undef": true,

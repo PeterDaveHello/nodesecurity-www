@@ -56,11 +56,14 @@ exports.register = function (plugin, options, next) {
     var walker = walk.walk(settings.rootDir, options);
 
     walker.on('file', function (root, fileStats, next) {
+
         plugin.log(['debug', 'hapi-advisories', 'walker'], 'Attempting to load file ' + fileStats.name);
+        
         if (fileStats.name === 'template.md') {
             plugin.log(['debug', 'hapi-advisories'], 'skipping template.md');
             return next();
         }
+
         if (root === settings.rootDir) {
             if (/\.md$/.test(fileStats.name)) {
                 var filename = fileStats.name.replace(/\.md$/, '');
@@ -111,11 +114,15 @@ exports.register = function (plugin, options, next) {
     });
 
     walker.on('errors', function (root, nodeStatsArray, next) {
+        console.log('walker err');
         plugin.log(['error', 'hapi-advisories', 'walker'], 'Walker error happened, zomg');
         next();
     });
 
     walker.on('end', function () {
+        console.log('walker end');
+
+
         plugin.log(['debug', 'hapi-advisories', 'walker'], 'Walker end');
         plugin.log(['debug', 'hapi-advisories', 'html'], 'render ' + settings.views + '/advisories.jade');
         advisories_html = jade.renderFile(settings.views + '/advisories.jade', {title: settings.title, index: toc, latest: latest});
