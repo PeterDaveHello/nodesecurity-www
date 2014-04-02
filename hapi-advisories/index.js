@@ -114,15 +114,11 @@ exports.register = function (plugin, options, next) {
     });
 
     walker.on('errors', function (root, nodeStatsArray, next) {
-        console.log('walker err');
         plugin.log(['error', 'hapi-advisories', 'walker'], 'Walker error happened, zomg');
         next();
     });
 
     walker.on('end', function () {
-        console.log('walker end');
-
-
         plugin.log(['debug', 'hapi-advisories', 'walker'], 'Walker end');
         plugin.log(['debug', 'hapi-advisories', 'html'], 'render ' + settings.views + '/advisories.jade');
         advisories_html = jade.renderFile(settings.views + '/advisories.jade', {title: settings.title, index: toc, latest: latest});
